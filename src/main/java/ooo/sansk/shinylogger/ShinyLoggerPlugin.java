@@ -4,7 +4,6 @@ import com.pixelmonmod.pixelmon.Pixelmon;
 import ooo.sansk.shinylogger.event.PixelmonListener;
 import ooo.sansk.shinylogger.service.CaptureLoggerRepository;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
