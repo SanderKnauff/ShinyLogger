@@ -1,0 +1,80 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'net.minecraftforge.gradle.forge' version '2.0.2'
+}
+
+group = 'oo.sansk'
+archivesBaseName = "ShinyLogger"
+version = '1.0-SNAPSHOT'
+
+description = """"""
+
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+configurations {
+    shade
+    compile.extendsFrom shade
+}
+
+repositories {
+    maven { url "http://repo.spongepowered.org/maven" }
+    maven { url "http://repo.maven.apache.org/maven2" }
+    flatDir {
+        dirs 'lib'
+    }
+}
+
+dependencies {
+    compile name: 'Pixelmon-1.12.2-6.2.3-universal'
+    compile group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.8.0-beta1'
+    compile group: 'org.spongepowered', name: 'spongeapi', version: '7.0.0'
+    compile group: 'junit', name: 'junit', version: '4.12'
+}
+
+processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+
+    // copy everything else except the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+minecraft {
+    version = "1.12.2-14.23.2.2619"
+    runDir = "run"
+
+    // the mappings can be changed at any time, and must be in the following format.
+    // snapshot_YYYYMMDD   snapshot are built nightly.
+    // stable_#            stables are built at the discretion of the MCP team.
+    // Use non-default mappings at your own risk. they may not always work.
+    // simply re-run your setup task after changing the mappings to update your workspace.
+    mappings = "snapshot_20171003"
+    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+}
