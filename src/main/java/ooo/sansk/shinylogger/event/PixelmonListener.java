@@ -14,7 +14,7 @@ public class PixelmonListener {
 
     @SubscribeEvent
     public void onPlayerPokemonCatch(CaptureEvent.SuccessfulCapture successfulCaptureEvent) {
-        if(successfulCaptureEvent.getPokemon().getIsShiny()) {
+        if (successfulCaptureEvent.getPokemon().getIsShiny()) {
             captureLogger.logCaptureForPlayer(successfulCaptureEvent.player);
         }
     }

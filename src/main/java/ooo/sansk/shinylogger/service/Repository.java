@@ -12,12 +12,14 @@ public interface Repository<I, T> {
 
     /**
      * Get all items currently in the repository
+     *
      * @return A collection containing all items in the repository
      */
     Collection<T> getAll();
 
     /**
      * Find a single value in the repository with a given id
+     *
      * @param id The id;
      * @return An optional that might contain the object if one with the same id was found in the repository
      */
@@ -26,6 +28,7 @@ public interface Repository<I, T> {
     /**
      * Adds an item to the repository.
      * This method should automatically detect Id collissions and overwrite the old value with the new item
+     *
      * @param item
      */
     void addOne(T item);
@@ -37,6 +40,7 @@ public interface Repository<I, T> {
 
     /**
      * Adds a collection of items to the repository. By default this uses the addOne implementation of the repository for each item in the collection.
+     *
      * @param all
      */
     default void addAll(T... all) {
