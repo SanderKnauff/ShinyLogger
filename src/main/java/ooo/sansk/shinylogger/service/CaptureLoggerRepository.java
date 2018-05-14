@@ -33,7 +33,7 @@ public class CaptureLoggerRepository implements Repository<UUID, PlayerCaptures>
     }
 
     public Collection<PlayerCaptures> getAll() {
-        if (isPlayerCaptureCacheLoaded())
+        if (!isPlayerCaptureCacheLoaded())
             loadAll();
         return playerCapturesCache.values();
     }
@@ -62,11 +62,11 @@ public class CaptureLoggerRepository implements Repository<UUID, PlayerCaptures>
 
     private List<String> getSerializedCache() {
         return playerCapturesCache.values().stream()
-                .map(this::searializeEntry)
+                .map(this::serializeEntry)
                 .collect(Collectors.toList());
     }
 
-    private String searializeEntry(PlayerCaptures playerCaptures) {
+    private String serializeEntry(PlayerCaptures playerCaptures) {
         return String.format("%s,%s", playerCaptures.getPlayerId(), playerCaptures.getCount());
     }
 
@@ -75,7 +75,7 @@ public class CaptureLoggerRepository implements Repository<UUID, PlayerCaptures>
     }
 
     private boolean isPlayerCaptureCacheLoaded() {
-        return playerCapturesCache == null;
+        return playerCapturesCache != null;
     }
 
     private void createEmptyPlayerCaptureCacheFile() {
