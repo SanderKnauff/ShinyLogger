@@ -80,14 +80,14 @@ public class CaptureLoggerRepository implements Repository<UUID, PlayerCaptures>
 
     private void createEmptyPlayerCaptureCacheFile() {
         try {
-            createStorageDirectoryIfNeccecary();
+            createStorageDirectoryIfNecessary();
             Files.createFile(playerCaptureCacheStorageFilePath);
         } catch (IOException e) {
             disablePluginDueToExceptionOnSetup(e);
         }
     }
 
-    private void createStorageDirectoryIfNeccecary() {
+    private void createStorageDirectoryIfNecessary() {
         try {
             Files.createDirectories(playerCaptureCacheStorageFilePath.getParent());
         } catch (IOException e) {
