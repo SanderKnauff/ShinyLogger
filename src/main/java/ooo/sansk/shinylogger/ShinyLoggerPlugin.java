@@ -75,7 +75,7 @@ public class ShinyLoggerPlugin {
     private Collection<CommandMapping> registerCommands(CaptureLoggerRepository captureLoggerRepository) {
         List<CommandMapping> commandMappingList = new ArrayList<>();
         Sponge.getCommandManager().register(this, CaptureLogDisplayCommand.createCommandSpec(this, captureLoggerRepository), "listshiny", "shinycaptures", "showshinycaptures").ifPresent(commandMappingList::add);
-        Sponge.getCommandManager().register(this, PurgeCaptureDataCommand.createCommandSpec(captureLoggerRepository), "purgeshinylist", "purgeshinylogs", "purgeshinylog").ifPresent(commandMappingList::add);
+        Sponge.getCommandManager().register(this, PurgeCaptureDataCommand.createCommandSpec(captureLoggerRepository), "purgeshinylogs").ifPresent(commandMappingList::add);
         return commandMappingList;
     }
 
