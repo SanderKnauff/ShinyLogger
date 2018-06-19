@@ -2,6 +2,7 @@ package ooo.sansk.shinylogger;
 
 import com.pixelmonmod.pixelmon.Pixelmon;
 import ooo.sansk.shinylogger.command.CaptureLogDisplayCommand;
+import ooo.sansk.shinylogger.command.PurgeCaptureDataCommand;
 import ooo.sansk.shinylogger.event.PixelmonListener;
 import ooo.sansk.shinylogger.service.CaptureLoggerRepository;
 import org.slf4j.Logger;
@@ -74,6 +75,7 @@ public class ShinyLoggerPlugin {
     private Collection<CommandMapping> registerCommands(CaptureLoggerRepository captureLoggerRepository) {
         List<CommandMapping> commandMappingList = new ArrayList<>();
         Sponge.getCommandManager().register(this, CaptureLogDisplayCommand.createCommandSpec(this, captureLoggerRepository), "listshiny", "shinycaptures", "showshinycaptures").ifPresent(commandMappingList::add);
+        Sponge.getCommandManager().register(this, PurgeCaptureDataCommand.createCommandSpec(captureLoggerRepository), "purgeshinylist", "purgeshinylogs", "purgeshinylog").ifPresent(commandMappingList::add);
         return commandMappingList;
     }
 

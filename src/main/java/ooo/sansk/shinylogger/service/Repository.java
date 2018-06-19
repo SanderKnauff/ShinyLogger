@@ -20,7 +20,7 @@ public interface Repository<I, T> {
     /**
      * Find a single value in the repository with a given id
      *
-     * @param id The id;
+     * @param id The id
      * @return An optional that might contain the object if one with the same id was found in the repository
      */
     Optional<T> findOne(I id);
@@ -38,6 +38,17 @@ public interface Repository<I, T> {
      */
     void save();
 
+    /**
+     * Removes the entry with the provided id
+     * @param id the id to search for
+     * @return the deleted item
+     */
+    Optional<T> removeOne(I id);
+
+    /**
+     * Removes all data from the repository
+     */
+    void removeAll();
     /**
      * Adds a collection of items to the repository. By default this uses the addOne implementation of the repository for each item in the collection.
      *

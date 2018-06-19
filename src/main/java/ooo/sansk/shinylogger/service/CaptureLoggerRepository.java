@@ -26,18 +26,21 @@ public class CaptureLoggerRepository implements Repository<UUID, PlayerCaptures>
         this.playerCaptureCacheStorageFilePath = playerCaptureCacheStorageFilePath;
     }
 
+    @Override
     public void loadAll() {
         if (!captureCacheFileExists())
             createEmptyPlayerCaptureCacheFile();
         playerCapturesCache = readPlayerCapturesFromFile();
     }
 
+    @Override
     public Collection<PlayerCaptures> getAll() {
         if (!isPlayerCaptureCacheLoaded())
             loadAll();
         return playerCapturesCache.values();
     }
 
+    @Override
     public void addOne(PlayerCaptures item) {
         if (isPlayerCaptureCacheLoaded())
             loadAll();
@@ -47,7 +50,20 @@ public class CaptureLoggerRepository implements Repository<UUID, PlayerCaptures>
 
     @Override
     public Optional<PlayerCaptures> findOne(UUID id) {
-        return Optional.ofNullable(playerCapturesCache.get(id));
+        Optional<PlayerCaptures> oRemovedPlayerCapture = Optional.ofNullable(playerCapturesCache.get(id));
+        save();
+        return oRemovedPlayerCapture;
+    }
+
+    @Override
+    public Optional<PlayerCaptures> removeOne(UUID id) {
+        return Optional.ofNullable(playerCapturesCache.remove(id));
+    }
+
+    @Override
+    public void removeAll() {
+        playerCapturesCache.clear();
+        save();
     }
 
     public void save() {
