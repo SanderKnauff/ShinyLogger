@@ -17,7 +17,7 @@ public class PlayerCapturesOutput {
     }
 
     private String getPlayerNameFromStorage(UUID playerId, UserStorageService userStorageService) {
-        return userStorageService.get(playerId)
+            return userStorageService.get(playerId)
                 .map(User::getName)
                 .orElse(UNKNOWN_PLAYER_NAME);
     }

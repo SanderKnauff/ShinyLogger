@@ -11,12 +11,20 @@ import java.util.Comparator;
 
 public class CaptureLogPrinter extends PlayerCapturesOutput {
 
+    private static final int DEFAULT_PRINT_AMOUNT = 10;
+
     private final CommandSource logReceiver;
     private final Collection<PlayerCaptures> logData;
+    private final int amountToPrint;
 
     public CaptureLogPrinter(CommandSource logReceiver, Collection<PlayerCaptures> logData) {
+        this(logReceiver, logData, DEFAULT_PRINT_AMOUNT);
+    }
+
+    public CaptureLogPrinter(CommandSource logReceiver, Collection<PlayerCaptures> logData, int amountToPrint) {
         this.logReceiver = logReceiver;
         this.logData = logData;
+        this.amountToPrint = amountToPrint;
     }
 
     public void print() {
@@ -26,12 +34,13 @@ public class CaptureLogPrinter extends PlayerCapturesOutput {
     }
 
     private void printHeader() {
-        logReceiver.sendMessage(Text.of(TextColors.GOLD, "###### ", TextColors.GREEN, "Logged Shiny Captures", TextColors.GOLD, " ######"));
+        logReceiver.sendMessage(Text.of(TextColors.GOLD, "###### ", TextColors.GREEN, "Top ", Math.min(logData.size(), amountToPrint), " Logged Shiny Captures", TextColors.GOLD, " ######"));
     }
 
     private void printData() {
         logData.stream()
                 .sorted(Comparator.comparingInt(PlayerCaptures::getCount).reversed())
+                .limit(amountToPrint)
                 .forEach(this::printPlayerCaptureEntry);
     }
 

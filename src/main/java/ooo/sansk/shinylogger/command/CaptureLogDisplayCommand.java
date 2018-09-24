@@ -34,13 +34,13 @@ public class CaptureLogDisplayCommand implements CommandExecutor {
         if(!verifyCommandSourceIsPlayer(commandSource) || commandRequestsPrintedList(context))
             printListToChat(commandSource);
         else
-            openGui(Player.class.cast(commandSource));
+            openGui((Player) commandSource);
         return CommandResult.success();
     }
 
 
     private boolean verifyCommandSourceIsPlayer(CommandSource commandSource) {
-        return Player.class.isInstance(commandSource);
+        return commandSource instanceof Player;
     }
 
     private boolean commandRequestsPrintedList(CommandContext context) {

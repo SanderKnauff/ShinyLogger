@@ -24,6 +24,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Beschrijving van de class
+ */
 public class CaptureLogGui extends PlayerCapturesOutput {
 
     private static final int INVENTORY_WIDTH = 9;
@@ -91,7 +94,7 @@ public class CaptureLogGui extends PlayerCapturesOutput {
     }
 
     private void fillGui() {
-        for (int listIndex = 0; listIndex < logData.size(); listIndex++)
+        for (int listIndex = 0; listIndex < INVENTORY_WIDTH * INVENTORY_HEIGHT; listIndex++)
             if (!isInInventoryNavigationRow(listIndex))
                 fillSlot(listIndex);
 
