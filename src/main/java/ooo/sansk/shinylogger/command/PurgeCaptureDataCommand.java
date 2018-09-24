@@ -9,6 +9,7 @@ import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.entity.living.player.User;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
@@ -35,7 +36,7 @@ public class PurgeCaptureDataCommand implements CommandExecutor {
                 .description(Text.of(DESCRIPTION_SHORT))
                 .extendedDescription(Text.of(DESCRIPTION_EXTENDED))
                 .permission(PERMISSION_NODE)
-                .arguments(GenericArguments.optionalWeak(GenericArguments.player(Text.of(COMMAND_ARGUMENT_KEY_PLAYER))))
+                .arguments(GenericArguments.optionalWeak(GenericArguments.user(Text.of(COMMAND_ARGUMENT_KEY_PLAYER))))
                 .build();
     }
 
@@ -49,12 +50,12 @@ public class PurgeCaptureDataCommand implements CommandExecutor {
         return CommandResult.success();
     }
 
-    private void clearLoggedDataForPlayer(CommandSource commandSource, Player player) {
-        Optional<PlayerCaptures> oPlayerCaptures = captureLoggerRepository.removeOne(player.getUniqueId());
+    private void clearLoggedDataForPlayer(CommandSource commandSource, User user) {
+        Optional<PlayerCaptures> oPlayerCaptures = captureLoggerRepository.removeOne(user.getUniqueId());
         if (oPlayerCaptures.isPresent())
             commandSource.sendMessage(Text.of(
                     TextColors.RED, "Removed all logged captures of player ",
-                    TextColors.GOLD, player.getName(),
+                    TextColors.GOLD, user.getName(),
                     TextColors.RED, ". Player had captured ",
                     TextColors.BLUE, oPlayerCaptures.get().getCount(),
                     TextColors.RED, " shiny pokemon since last data purge.")
@@ -62,7 +63,7 @@ public class PurgeCaptureDataCommand implements CommandExecutor {
         else
             commandSource.sendMessage(Text.of(
                     TextColors.RED, "Could not find any logged captures for ",
-                    TextColors.GOLD, player.getName(),
+                    TextColors.GOLD, user.getName(),
                     TextColors.RED, "."));
     }
 

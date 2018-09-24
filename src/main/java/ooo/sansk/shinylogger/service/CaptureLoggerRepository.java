@@ -57,7 +57,9 @@ public class CaptureLoggerRepository implements Repository<UUID, PlayerCaptures>
 
     @Override
     public Optional<PlayerCaptures> removeOne(UUID id) {
-        return Optional.ofNullable(playerCapturesCache.remove(id));
+        Optional<PlayerCaptures> remove = Optional.ofNullable(playerCapturesCache.remove(id));
+        save();
+        return remove;
     }
 
     @Override
